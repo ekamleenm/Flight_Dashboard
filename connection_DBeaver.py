@@ -11,18 +11,17 @@ class DB:
         database = 'flights_app'
 
         try:
-            conn = mysql.connector.connect(
+            self.conn = mysql.connector.connect(
                 host=host,
                 user=user,
                 password=password,
                 database=database
             )
 
-            cursor = conn.cursor()
+            self.cursor = self.conn.cursor()
 
         except Error as e:
             print(f"Error: {e}")
 
-
     def fetch_city_names(self):
-        pass
+        self.cursor.execute("""SELECT DISTINCT(Source) FROM flights_app.flights UNION SELECT DISTINCT (Destination) FROM flights_app.flights """)
