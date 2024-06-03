@@ -1,0 +1,12 @@
+ cursor.execute("""CREATE TABLE IF NOT EXISTS flights (
+            Airline VARCHAR(255),
+            Date_of_Journey DATE,
+            Source VARCHAR(255),
+            Destination VARCHAR(255),
+            Route VARCHAR(255),
+            Dep_Time TIME,
+            Duration VARCHAR(255),
+            Total_Stops VARCHAR(255),
+            Price INT
+        )
+        """)
