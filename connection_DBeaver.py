@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import Error
-import streamlit
 
 
 class DB:
@@ -24,4 +23,19 @@ class DB:
             print(f"Error: {e}")
 
     def fetch_city_names(self):
-        self.cursor.execute("""SELECT DISTINCT(Source) FROM flights_app.flights UNION SELECT DISTINCT (Destination) FROM flights_app.flights """)
+        city = []
+        self.cursor.execute("""SELECT DISTINCT(Source) FROM flights_app.flights 
+                               UNION SELECT DISTINCT (Destination) FROM flights_app.flights """)
+
+        data = self.cursor.fetchall()
+        for item in data:
+            city.append(item[0])  # b/c fetchall returns row s as tuples. e.g. [(surrey,),(Langley,) ...]
+
+        return city
+
+    def fetch_all_flights(self, source, destination):
+        self.cursor.execute(
+            """SELECT Airline,Route,Dep_Time,Duration,Price FROM flights f WHERE Source = '{}' AND Destination ='{}'""".format(
+                source, destination))
+        data = self.cursor.fetchall()
+        return data
